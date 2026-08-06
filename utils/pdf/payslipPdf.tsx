@@ -1,4 +1,4 @@
-import { Document, Page, View, Text, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 
 type PayslipDocData = {
   employeeCode: string | null;
@@ -22,7 +22,10 @@ type PayslipDocData = {
 };
 
 function fmt(n: number) {
-  return n.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return n.toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 function monthLabel(ym: string) {
@@ -35,18 +38,48 @@ function formatDate(iso: string | null): string {
   if (!iso) return "—";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "—";
-  return d.toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" });
+  return d.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 }
 
 function numToWords(n: number): string {
   if (n === 0) return "Zero";
   const ones = [
-    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
-    "Seventeen", "Eighteen", "Nineteen",
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
   ];
   const tens = [
-    "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety",
+    "",
+    "",
+    "Twenty",
+    "Thirty",
+    "Forty",
+    "Fifty",
+    "Sixty",
+    "Seventy",
+    "Eighty",
+    "Ninety",
   ];
 
   function below100(num: number): string {
@@ -55,14 +88,20 @@ function numToWords(n: number): string {
   }
   function below1000(num: number): string {
     if (num < 100) return below100(num);
-    return ones[Math.floor(num / 100)] + " Hundred" + (num % 100 ? " " + below100(num % 100) : "");
+    return (
+      ones[Math.floor(num / 100)] +
+      " Hundred" +
+      (num % 100 ? " " + below100(num % 100) : "")
+    );
   }
 
   const intPart = Math.floor(n);
   const decPart = Math.round((n - intPart) * 100);
   let result = "";
-  if (intPart >= 100000) result += below1000(Math.floor(intPart / 100000)) + " Lakh ";
-  if (intPart >= 1000) result += below1000(Math.floor((intPart % 100000) / 1000)) + " Thousand ";
+  if (intPart >= 100000)
+    result += below1000(Math.floor(intPart / 100000)) + " Lakh ";
+  if (intPart >= 1000)
+    result += below1000(Math.floor((intPart % 100000) / 1000)) + " Thousand ";
   result += below1000(intPart % 1000);
   if (decPart > 0) result += " and " + below100(decPart) + " Paise";
   return result.trim();
@@ -365,7 +404,9 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
             </View>
             <View style={styles.companyBlock}>
               <Text style={styles.companyName}>AVION360</Text>
-              <Text style={styles.companyTagline}>Connecting Materials, Creating Value.</Text>
+              <Text style={styles.companyTagline}>
+                Connecting Materials, Creating Value.
+              </Text>
             </View>
           </View>
           <View style={styles.headerRight}>
@@ -383,7 +424,9 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
           <Text style={styles.titleText}>— SALARY SLIP —</Text>
         </View>
         <View style={styles.monthRow}>
-          <Text style={styles.monthText}>For the Month of {monthLabel(data.month)}</Text>
+          <Text style={styles.monthText}>
+            For the Month of {monthLabel(data.month)}
+          </Text>
         </View>
 
         {/* Employee Info Grid */}
@@ -411,18 +454,24 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
             {earningsRows.map(([label, val]) => (
               <View key={label} style={styles.salRow}>
                 <Text style={styles.salPart}>{label}</Text>
-                <Text style={styles.salAmount}>{val > 0 ? fmt(val) : "XXX"}</Text>
+                <Text style={styles.salAmount}>
+                  {val > 0 ? fmt(val) : "XXX"}
+                </Text>
               </View>
             ))}
             {[0, 1].map((i) => (
               <View key={`blank-e-${i}`} style={styles.salRow}>
-                <Text style={[styles.salPart, { color: "#999" }]}>__________ Allowance</Text>
+                <Text style={[styles.salPart, { color: "#999" }]}>
+                  __________ Allowance
+                </Text>
                 <Text style={[styles.salAmount, { color: "#999" }]}>XXX</Text>
               </View>
             ))}
             <View style={styles.salTotalRow}>
               <Text style={styles.salTotalPart}>Total Earnings (A)</Text>
-              <Text style={styles.salTotalAmount}>{fmt(data.totalEarnings)}</Text>
+              <Text style={styles.salTotalAmount}>
+                {fmt(data.totalEarnings)}
+              </Text>
             </View>
           </View>
 
@@ -438,7 +487,9 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
             {deductionsRows.map(([label, val]) => (
               <View key={label} style={styles.salRow}>
                 <Text style={styles.salPart}>{label}</Text>
-                <Text style={styles.salAmount}>{val > 0 ? fmt(val) : "XXX"}</Text>
+                <Text style={styles.salAmount}>
+                  {val > 0 ? fmt(val) : "XXX"}
+                </Text>
               </View>
             ))}
             {[0, 1, 2].map((i) => (
@@ -449,7 +500,9 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
             ))}
             <View style={styles.salTotalRow}>
               <Text style={styles.salTotalPart}>Total Deductions (B)</Text>
-              <Text style={styles.salTotalAmount}>{fmt(data.totalDeductions)}</Text>
+              <Text style={styles.salTotalAmount}>
+                {fmt(data.totalDeductions)}
+              </Text>
             </View>
           </View>
         </View>
@@ -462,7 +515,8 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
         <View style={styles.wordsRow}>
           <Text>
             <Text style={styles.wordsBold}>Net Salary in Words: </Text>
-            {"Rupees "}{numToWords(Math.floor(data.netSalary))} Only
+            {"Rupees "}
+            {numToWords(Math.floor(data.netSalary))} Only
           </Text>
         </View>
 
@@ -480,7 +534,10 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
         </View>
 
         <View style={styles.disclaimer}>
-          <Text>This is a computer generated payslip and does not require a physical signature.</Text>
+          <Text>
+            This is a computer generated payslip and does not require a physical
+            signature.
+          </Text>
         </View>
       </Page>
     </Document>

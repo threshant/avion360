@@ -1,6 +1,20 @@
-import { Document, Page, View, Text, Image, StyleSheet } from "@react-pdf/renderer";
-import { BUSINESS_NAME, ADDRESS, GST_NO, CONTACT, BANK, amountInWords } from "./shared";
 import type { InvoiceItem } from "@/types/invoice";
+import {
+  Document,
+  Image,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
+import {
+  ADDRESS,
+  BANK,
+  BUSINESS_NAME,
+  CONTACT,
+  GST_NO,
+  amountInWords,
+} from "./shared";
 
 type QuotationDocData = {
   quotationNumber: string;
@@ -246,7 +260,9 @@ export function QuotationDocument({ data }: { data: QuotationDocData }) {
           </View>
           <View style={styles.headerRight}>
             <Text style={styles.docTitle}>QUOTATION</Text>
-            <Text style={styles.docMeta}>Quotation No. {data.quotationNumber}</Text>
+            <Text style={styles.docMeta}>
+              Quotation No. {data.quotationNumber}
+            </Text>
             <Text style={styles.docMeta}>Date {data.issueDate}</Text>
           </View>
         </View>
@@ -270,12 +286,24 @@ export function QuotationDocument({ data }: { data: QuotationDocData }) {
         <View style={styles.table} wrap={false}>
           <View style={styles.tableHeader}>
             <Text style={[styles.tableHeaderText, styles.cellSN]}>No.</Text>
-            <Text style={[styles.tableHeaderText, styles.cellDesc]}>Description</Text>
-            {hasImages && <Text style={[styles.tableHeaderText, styles.cellImage]}>Image</Text>}
+            <Text style={[styles.tableHeaderText, styles.cellDesc]}>
+              Description
+            </Text>
+            {hasImages && (
+              <Text style={[styles.tableHeaderText, styles.cellImage]}>
+                Image
+              </Text>
+            )}
             <Text style={[styles.tableHeaderText, styles.cellQty]}>Qty</Text>
-            <Text style={[styles.tableHeaderText, styles.cellCost]}>Unit Price</Text>
-            <Text style={[styles.tableHeaderText, styles.cellGst]}>GST ({data.taxRate}%)</Text>
-            <Text style={[styles.tableHeaderText, styles.cellTotal]}>Amount</Text>
+            <Text style={[styles.tableHeaderText, styles.cellCost]}>
+              Unit Price
+            </Text>
+            <Text style={[styles.tableHeaderText, styles.cellGst]}>
+              GST ({data.taxRate}%)
+            </Text>
+            <Text style={[styles.tableHeaderText, styles.cellTotal]}>
+              Amount
+            </Text>
           </View>
           {data.items.map((item, i) => {
             const gst = (item.amount * data.taxRate) / 100;
@@ -283,7 +311,10 @@ export function QuotationDocument({ data }: { data: QuotationDocData }) {
             return (
               <View
                 key={i}
-                style={[styles.tableRow, ...(i % 2 === 0 ? [styles.tableRowAlt] : [])]}
+                style={[
+                  styles.tableRow,
+                  ...(i % 2 === 0 ? [styles.tableRowAlt] : []),
+                ]}
                 wrap={false}
               >
                 <Text style={styles.cellSN}>{i + 1}</Text>
@@ -291,7 +322,10 @@ export function QuotationDocument({ data }: { data: QuotationDocData }) {
                 {hasImages && (
                   <View style={styles.cellImage}>
                     {item.imageBase64 ? (
-                      <Image src={item.imageBase64} style={{ width: 40, height: 40 }} />
+                      <Image
+                        src={item.imageBase64}
+                        style={{ width: 40, height: 40 }}
+                      />
                     ) : (
                       <Text style={{ fontSize: 7, color: "#b8becd" }}>–</Text>
                     )}
@@ -355,7 +389,8 @@ export function QuotationDocument({ data }: { data: QuotationDocData }) {
         {/* Footer */}
         <View fixed style={styles.footer}>
           <Text style={styles.footerText}>
-            Thank you for choosing our services | Email: info@avion360.com | Tel: 86681 91780
+            Thank you for choosing our services | Email: info@avion360.com |
+            Tel: 86681 91780
           </Text>
         </View>
       </Page>

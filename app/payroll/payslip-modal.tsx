@@ -1,9 +1,9 @@
 "use client";
 
+import { downloadPdf } from "@/utils/pdf/download";
+import { PayslipDocument } from "@/utils/pdf/payslipPdf";
 import { Download, X } from "lucide-react";
 import { useState } from "react";
-import { PayslipDocument } from "@/utils/pdf/payslipPdf";
-import { downloadPdf } from "@/utils/pdf/download";
 
 export type PayslipData = {
   employeeCode: string | null;

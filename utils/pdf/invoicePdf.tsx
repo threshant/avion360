@@ -1,6 +1,21 @@
-import { Document, Page, View, Text, Image, StyleSheet } from "@react-pdf/renderer";
-import { BUSINESS_NAME, ADDRESS, GST_NO, CONTACT, BANK, CURRENCY_SYMBOLS, amountInWords } from "./shared";
 import type { InvoiceItem } from "@/types/invoice";
+import {
+  Document,
+  Image,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
+import {
+  ADDRESS,
+  BANK,
+  BUSINESS_NAME,
+  CONTACT,
+  CURRENCY_SYMBOLS,
+  GST_NO,
+  amountInWords,
+} from "./shared";
 
 type InvoiceDocData = {
   invoiceNumber: string;
@@ -259,11 +274,19 @@ export function InvoiceDocument({ data }: { data: InvoiceDocData }) {
             </Text>
           </View>
           <View style={styles.headerRight}>
-            <Text style={styles.docTitle}>{data.documentTitle ?? "INVOICE"}</Text>
-            <Text style={styles.docMeta}>{data.invoiceNumberLabel ?? "Invoice No."} {data.invoiceNumber}</Text>
-            <Text style={styles.docMeta}>{data.issueDateLabel ?? "Invoice Date"} {data.issueDate}</Text>
+            <Text style={styles.docTitle}>
+              {data.documentTitle ?? "INVOICE"}
+            </Text>
+            <Text style={styles.docMeta}>
+              {data.invoiceNumberLabel ?? "Invoice No."} {data.invoiceNumber}
+            </Text>
+            <Text style={styles.docMeta}>
+              {data.issueDateLabel ?? "Invoice Date"} {data.issueDate}
+            </Text>
             {data.dueDate && (
-              <Text style={styles.docMeta}>{data.dueDateLabel ?? "Due Date"} {data.dueDate}</Text>
+              <Text style={styles.docMeta}>
+                {data.dueDateLabel ?? "Due Date"} {data.dueDate}
+              </Text>
             )}
           </View>
         </View>
@@ -288,26 +311,48 @@ export function InvoiceDocument({ data }: { data: InvoiceDocData }) {
         <View style={styles.table} wrap={false}>
           <View style={styles.tableHeader}>
             <Text style={[styles.tableHeaderText, styles.cellNo]}>No.</Text>
-            <Text style={[styles.tableHeaderText, styles.cellDesc]}>Description</Text>
-            {hasHsn && <Text style={[styles.tableHeaderText, styles.cellHsn]}>HSN/SAC</Text>}
-            {showImages && <Text style={[styles.tableHeaderText, styles.cellImage]}>Image</Text>}
+            <Text style={[styles.tableHeaderText, styles.cellDesc]}>
+              Description
+            </Text>
+            {hasHsn && (
+              <Text style={[styles.tableHeaderText, styles.cellHsn]}>
+                HSN/SAC
+              </Text>
+            )}
+            {showImages && (
+              <Text style={[styles.tableHeaderText, styles.cellImage]}>
+                Image
+              </Text>
+            )}
             <Text style={[styles.tableHeaderText, styles.cellQty]}>Qty</Text>
-            <Text style={[styles.tableHeaderText, styles.cellPrice]}>Unit Price</Text>
-            <Text style={[styles.tableHeaderText, styles.cellAmount]}>Amount</Text>
+            <Text style={[styles.tableHeaderText, styles.cellPrice]}>
+              Unit Price
+            </Text>
+            <Text style={[styles.tableHeaderText, styles.cellAmount]}>
+              Amount
+            </Text>
           </View>
           {data.items.map((item, i) => (
             <View
               key={i}
-              style={[styles.tableRow, ...(i % 2 === 0 ? [styles.tableRowAlt] : [])]}
+              style={[
+                styles.tableRow,
+                ...(i % 2 === 0 ? [styles.tableRowAlt] : []),
+              ]}
               wrap={false}
             >
               <Text style={styles.cellNo}>{i + 1}</Text>
               <Text style={styles.cellDesc}>{item.description || "-"}</Text>
-              {hasHsn && <Text style={styles.cellHsn}>{item.hsnCode ?? ""}</Text>}
+              {hasHsn && (
+                <Text style={styles.cellHsn}>{item.hsnCode ?? ""}</Text>
+              )}
               {showImages && (
                 <View style={styles.cellImage}>
                   {item.imageBase64 ? (
-                    <Image src={item.imageBase64} style={{ width: 40, height: 40 }} />
+                    <Image
+                      src={item.imageBase64}
+                      style={{ width: 40, height: 40 }}
+                    />
                   ) : (
                     <Text style={{ fontSize: 7, color: "#b8becd" }}>–</Text>
                   )}
@@ -330,23 +375,31 @@ export function InvoiceDocument({ data }: { data: InvoiceDocData }) {
             {discAmt > 0 && (
               <>
                 <View style={styles.totalRow}>
-                  <Text style={styles.totalLabel}>Discount ({data.discountPercentage ?? 0}%)</Text>
+                  <Text style={styles.totalLabel}>
+                    Discount ({data.discountPercentage ?? 0}%)
+                  </Text>
                   <Text style={styles.totalValue}>- {fmt(discAmt, sym)}</Text>
                 </View>
                 <View style={styles.totalRow}>
                   <Text style={styles.totalLabel}>Taxable Value</Text>
-                  <Text style={styles.totalValue}>{fmt(data.subtotal - discAmt, sym)}</Text>
+                  <Text style={styles.totalValue}>
+                    {fmt(data.subtotal - discAmt, sym)}
+                  </Text>
                 </View>
               </>
             )}
             {taxType === "CGST_SGST" ? (
               <>
                 <View style={styles.totalRow}>
-                  <Text style={styles.totalLabel}>CGST ({data.taxRate / 2}%)</Text>
+                  <Text style={styles.totalLabel}>
+                    CGST ({data.taxRate / 2}%)
+                  </Text>
                   <Text style={styles.totalValue}>{fmt(halfGst, sym)}</Text>
                 </View>
                 <View style={styles.totalRow}>
-                  <Text style={styles.totalLabel}>SGST ({data.taxRate / 2}%)</Text>
+                  <Text style={styles.totalLabel}>
+                    SGST ({data.taxRate / 2}%)
+                  </Text>
                   <Text style={styles.totalValue}>{fmt(halfGst, sym)}</Text>
                 </View>
               </>
@@ -358,7 +411,9 @@ export function InvoiceDocument({ data }: { data: InvoiceDocData }) {
             )}
             <View style={styles.totalAmountRow}>
               <Text style={styles.totalAmountLabel}>Total Amount</Text>
-              <Text style={styles.totalAmountValue}>{fmt(data.total, sym)}</Text>
+              <Text style={styles.totalAmountValue}>
+                {fmt(data.total, sym)}
+              </Text>
             </View>
           </View>
         </View>
@@ -389,14 +444,17 @@ export function InvoiceDocument({ data }: { data: InvoiceDocData }) {
         {/* Signature */}
         <View style={styles.signature}>
           <View style={styles.signatureLine} />
-          <Text style={styles.signatureText}>{data.signatoryName || "Authorized"}</Text>
+          <Text style={styles.signatureText}>
+            {data.signatoryName || "Authorized"}
+          </Text>
           <Text style={styles.signatureLabel}>Authorised Signature</Text>
         </View>
 
         {/* Footer */}
         <View fixed style={styles.footer}>
           <Text style={styles.footerText}>
-            Thank you for choosing our services | Email: info@avion360.com | Tel: 86681 91780
+            Thank you for choosing our services | Email: info@avion360.com |
+            Tel: 86681 91780
           </Text>
         </View>
       </Page>
