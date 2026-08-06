@@ -3,38 +3,42 @@ import {
   createLoginNextResponse,
 } from "@/lib/auth-session";
 import { createServerSupabaseClient } from "@/lib/supabaseClient";
+import type { SignupPayload } from "@/types/auth";
 import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
 
-const ALLOWED_ROLES = ["super_admin", "admin", "employee"];
-
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const {
-      name,
-      email,
-      password,
-      role,
-      masterPin,
-      organizationName,
-      planTier,
-    } = body ?? {};
+    const body = (await request.json()) as Partial<SignupPayload>;
+    const name = String(body.name ?? "").trim();
+    const email = String(body.email ?? "")
+      .trim()
+      .toLowerCase();
+    const password = String(body.password ?? "");
+    const organizationName = String(body.organizationName ?? "").trim();
+    const industry = String(body.industry ?? "").trim();
+    const teamSizeRaw = Number(body.teamSize);
+    const planTier =
+      typeof body.planTier === "string" && body.planTier.trim()
+        ? body.planTier.trim()
+        : "starter";
+    const companyWebsite =
+      typeof body.companyWebsite === "string" && body.companyWebsite.trim()
+        ? body.companyWebsite.trim()
+        : null;
 
-    if (!name || !email || !password || !role || !masterPin) {
+    if (!name || !email || !password || !organizationName || !industry) {
       return Response.json(
         { error: "Missing required fields" },
         { status: 400 },
       );
     }
 
-    const MASTER_PIN = process.env.MASTER_SIGNUP_PIN || "123456";
-    if (masterPin !== MASTER_PIN) {
-      return Response.json({ error: "Invalid master pin" }, { status: 401 });
-    }
-
-    if (!ALLOWED_ROLES.includes(role)) {
-      return Response.json({ error: "Invalid role" }, { status: 400 });
+    if (!Number.isInteger(teamSizeRaw) || teamSizeRaw < 1) {
+      return Response.json(
+        { error: "Team size must be a positive number" },
+        { status: 400 },
+      );
     }
 
     const supabase = createServerSupabaseClient();
@@ -45,6 +49,13 @@ export async function POST(request: NextRequest) {
       .select("*")
       .eq("email", email)
       .single();
+    if (fetchErr && fetchErr.code !== "PGRST116") {
+      console.error("Signup fetch user error:", fetchErr);
+      return Response.json(
+        { error: "Failed to check existing user" },
+        { status: 500 },
+      );
+    }
     if (existing) {
       return Response.json({ error: "User already exists" }, { status: 409 });
     }
@@ -58,7 +69,7 @@ export async function POST(request: NextRequest) {
         {
           name,
           email,
-          role,
+          role: "super_admin",
           password_hash: passwordHash,
           is_active: true,
           created_at: now,
@@ -73,19 +84,16 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "Failed to create user" }, { status: 500 });
     }
 
-    const orgName =
-      typeof organizationName === "string" && organizationName.trim()
-        ? organizationName.trim()
-        : `${String(name).trim()} Organization`;
+    const orgName = organizationName || `${name} Organization`;
 
     const { data: organization, error: organizationError } = await supabase
       .from("organizations")
       .insert({
         name: orgName,
-        plan_tier:
-          typeof planTier === "string" && planTier.trim()
-            ? planTier.trim()
-            : "starter",
+        plan_tier: planTier,
+        industry,
+        team_size: teamSizeRaw,
+        company_website: companyWebsite,
       })
       .select("id")
       .single();

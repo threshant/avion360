@@ -2,6 +2,7 @@ import type {
   ChangePasswordPayload,
   LoginPayload,
   LoginResponse,
+  SignupPayload,
   UpdateProfilePayload,
   User,
 } from "@/types/auth";
@@ -35,15 +36,7 @@ export async function changePassword(
   return api.post<void>("/api/auth/change-password", payload);
 }
 
-export async function signup(payload: {
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-  masterPin: string;
-  organizationName?: string;
-  planTier?: string;
-}): Promise<LoginResponse> {
+export async function signup(payload: SignupPayload): Promise<LoginResponse> {
   return api.post<LoginResponse>("/api/auth/signup", payload);
 }
 

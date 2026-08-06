@@ -4,58 +4,25 @@ import PhoneOtpLogin from "@/components/PhoneOtpLogin";
 import { useOtpLoginStatus } from "@/hooks/useOtpLoginStatus";
 import { useAuth } from "@/lib/auth-context";
 import { LoaderCircle, LogIn } from "lucide-react";
+import { Plus_Jakarta_Sans, Sora } from "next/font/google";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 
-type RoleKey = "super_admin" | "admin" | "employee";
-
-type RolePreset = {
-  id: RoleKey;
-  label: string;
-  email: string;
-  password: string;
-  dotClass: string;
-};
-
-const rolePresets: RolePreset[] = [
-  {
-    id: "super_admin",
-    label: "Super Admin",
-    email: "super.admin@crm.demo",
-    password: "Super@123",
-    dotClass: "border-sky-600",
-  },
-  {
-    id: "admin",
-    label: "Admin / Team Lead",
-    email: "admin@crm.demo",
-    password: "Admin@123",
-    dotClass: "border-cyan-600",
-  },
-  {
-    id: "employee",
-    label: "Employee",
-    email: "employee@crm.demo",
-    password: "Employee@123",
-    dotClass: "border-teal-600",
-  },
-];
+const headingFont = Sora({ subsets: ["latin"], weight: ["600", "700"] });
+const bodyFont = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 export default function Home() {
   const router = useRouter();
   const { login, isAuthenticated, loginWithToken } = useAuth();
-  const [selectedRole, setSelectedRole] = useState<RoleKey>("super_admin");
-  const [email, setEmail] = useState(rolePresets[0].email);
-  const [password, setPassword] = useState(rolePresets[0].password);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { otpLoginStatus } = useOtpLoginStatus(!isAuthenticated);
-
-  const currentRole = useMemo(
-    () =>
-      rolePresets.find((role) => role.id === selectedRole) ?? rolePresets[0],
-    [selectedRole],
-  );
 
   const handleTokenLogin = useCallback(
     async (token: string) => {
@@ -89,13 +56,6 @@ export default function Home() {
     }
   }, [handleTokenLogin, isAuthenticated, router]);
 
-  const handleRoleSelect = (role: RolePreset) => {
-    setSelectedRole(role.id);
-    setEmail(role.email);
-    setPassword(role.password);
-    setError(null);
-  };
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -119,61 +79,88 @@ export default function Home() {
   }
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-b from-[#f8fbff] via-[#eff4ff] to-[#e6efff]">
-      {/* ── Animated background (fixed so they never affect layout) ── */}
-      <div className="bg-shimmer pointer-events-none fixed inset-0 z-0" />
-      <div className="animate-float-slow pointer-events-none fixed -top-32 left-1/3 h-96 w-96 rounded-full bg-sky-300/30 blur-3xl" />
-      <div className="animate-float-medium pointer-events-none fixed right-10 top-24 h-80 w-80 rounded-full bg-cyan-200/35 blur-3xl" />
-      <div className="animate-float-fast pointer-events-none fixed bottom-20 left-1/4 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
-      <div
-        className="animate-float-slow pointer-events-none fixed bottom-1/3 right-1/3 h-64 w-64 rounded-full bg-sky-200/25 blur-3xl"
-        style={{ animationDelay: "3s" }}
-      />
+    <main
+      className={`${bodyFont.className} relative min-h-screen overflow-hidden bg-[#e8ebff]`}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(90,121,255,.35),transparent_35%),radial-gradient(circle_at_80%_90%,rgba(31,83,255,.2),transparent_32%)]" />
 
-      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-6">
-        <div className="w-full">
-          <div className="mx-auto flex flex-col items-center justify-center text-center">
-            {/* Sourcersbiz CRM Title */}
-            <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl text-slate-800 mb-6">
-              Sourcersbiz CRM
-            </h1>
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl items-center px-4 py-6 sm:px-6 lg:px-10">
+        <div className="grid w-full overflow-hidden rounded-[30px] border border-white/60 bg-white shadow-[0_30px_80px_rgba(20,33,90,0.22)] md:grid-cols-[0.95fr_1.05fr]">
+          <section className="relative flex flex-col justify-between bg-linear-to-b from-[#4f62ff] to-[#2640e9] p-8 text-white sm:p-10">
+            <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-white/15 blur-2xl" />
+            <div className="absolute -bottom-7.5 -left-7.5 h-40 w-40 rounded-full bg-[#7ca1ff]/30 blur-2xl" />
 
-            {/* Login Card */}
-            <div className="mx-auto w-full max-w-xl rounded-2xl border border-slate-200 bg-white/95 p-6 text-zinc-900 shadow-2xl shadow-slate-300/50 backdrop-blur md:p-8">
-              <h2 className="text-2xl font-bold">Login</h2>
-              <p className="mt-1.5 text-base text-zinc-500">
-                Enter your credentials to access the system
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-white/75">
+                Sourcersbiz CRM
+              </p>
+              <h1
+                className={`${headingFont.className} mt-6 text-3xl font-semibold leading-tight sm:text-4xl`}
+              >
+                Welcome back.
+                <br />
+                Close more deals with one clean workspace.
+              </h1>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-blue-100">
+                Unified calls, leads, and follow-ups for fast-moving teams. Sign
+                in to continue where you left off.
+              </p>
+            </div>
+
+            <div className="mt-10 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+              <p className="text-sm text-white/90">
+                "The team now tracks every lead stage and conversation without
+                spreadsheet chaos."
+              </p>
+              <p className="mt-3 text-xs font-semibold tracking-wide text-blue-100">
+                Revenue Ops Lead
+              </p>
+            </div>
+          </section>
+
+          <section className="p-6 sm:p-10">
+            <div className="mx-auto w-full max-w-md">
+              <h2
+                className={`${headingFont.className} text-3xl font-semibold text-slate-900`}
+              >
+                Sign in
+              </h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Enter your workspace credentials.
               </p>
 
               {error && (
-                <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                <div className="mt-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                   {error}
                 </div>
               )}
 
-              <div className="mt-4 rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 text-sm text-sky-800">
-                Signing in as{" "}
-                <span className="font-semibold">{currentRole.label}</span>
-              </div>
-
-              <form className="mt-5 space-y-4" onSubmit={handleSubmit}>
+              <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
                 <div className="space-y-1.5">
-                  <label htmlFor="email" className="text-base font-semibold">
-                    Email
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-semibold text-slate-700"
+                  >
+                    Work email
                   </label>
                   <input
                     id="email"
                     name="email"
                     type="email"
                     autoComplete="email"
+                    placeholder="you@company.com"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-700 outline-none ring-sky-300 transition focus:bg-white focus:ring-2"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-700 outline-none ring-[#5d71ff] transition focus:bg-white focus:ring-2"
+                    required
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="password" className="text-base font-semibold">
+                  <label
+                    htmlFor="password"
+                    className="text-sm font-semibold text-slate-700"
+                  >
                     Password
                   </label>
                   <input
@@ -181,16 +168,18 @@ export default function Home() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
-                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-700 outline-none ring-sky-300 transition focus:bg-white focus:ring-2"
+                    className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-700 outline-none ring-[#5d71ff] transition focus:bg-white focus:ring-2"
+                    required
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-slate-800 to-sky-700 text-base font-semibold text-white transition hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-[#253ed8] to-[#4f62ff] text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isLoading ? (
                     <>
@@ -203,7 +192,7 @@ export default function Home() {
                   ) : (
                     <>
                       <LogIn aria-hidden="true" className="h-5 w-5" />
-                      <span>Sign In</span>
+                      <span>Sign in</span>
                     </>
                   )}
                 </button>
@@ -215,9 +204,9 @@ export default function Home() {
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-slate-200" />
                     </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="bg-white px-3 text-slate-500">
-                        or sign in with phone
+                    <div className="relative flex justify-center text-xs uppercase tracking-[0.18em]">
+                      <span className="bg-white px-3 text-slate-400">
+                        or phone login
                       </span>
                     </div>
                   </div>
@@ -229,42 +218,17 @@ export default function Home() {
                 </>
               )}
 
-              <div className="mt-4 text-center">
-                <a
+              <p className="mt-6 text-center text-sm text-slate-500">
+                Need an account?{" "}
+                <Link
                   href="/signup"
-                  className="text-sm font-semibold text-sky-700 hover:underline"
+                  className="font-semibold text-[#3148de] hover:underline"
                 >
-                  Don&apos;t have an account? Sign up
-                </a>
-              </div>
-
-              <div className="mt-6 border-t border-zinc-200 pt-5">
-                <div className="mt-4 space-y-3">
-                  {rolePresets.map((role) => {
-                    const isActive = selectedRole === role.id;
-
-                    return (
-                      <button
-                        key={role.id}
-                        type="button"
-                        onClick={() => handleRoleSelect(role)}
-                        className={`flex h-12 w-full items-center gap-3 rounded-xl border px-4 text-left text-base font-semibold transition ${
-                          isActive
-                            ? "border-sky-300 bg-sky-50 text-sky-800"
-                            : "border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
-                        }`}
-                      >
-                        <span
-                          className={`inline-block h-3.5 w-3.5 rounded-full border-2 ${role.dotClass}`}
-                        />
-                        <span>{role.label}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+                  Create one
+                </Link>
+              </p>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </main>

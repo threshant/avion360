@@ -16,7 +16,7 @@ import {
   switchTenant as switchTenantService,
   type TenantMembership,
 } from "@/services/tenantService";
-import type { User } from "@/types/auth";
+import type { SignupPayload, User } from "@/types/auth";
 import type { Permission } from "@/types/rbac";
 import React, {
   createContext,
@@ -34,15 +34,7 @@ interface AuthContextType {
   loading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (data: {
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-    masterPin: string;
-    organizationName?: string;
-    planTier?: string;
-  }) => Promise<void>;
+  signup: (data: SignupPayload) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (data: Partial<User>) => Promise<void>;
   refreshPermissions: () => Promise<void>;
@@ -237,15 +229,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const signup = useCallback(
-    async (data: {
-      name: string;
-      email: string;
-      password: string;
-      role: string;
-      masterPin: string;
-      organizationName?: string;
-      planTier?: string;
-    }) => {
+    async (data: SignupPayload) => {
       setLoading(true);
       try {
         const result = await authSignup(data);

@@ -34,3 +34,14 @@ export type ChangePasswordPayload = {
   currentPassword: string;
   newPassword: string;
 };
+
+export type SignupPayload = {
+  name: string;
+  email: string;
+  password: string;
+  organizationName: string;
+  teamSize: number;
+  industry: string;
+  companyWebsite?: string;
+  planTier?: string;
+};
