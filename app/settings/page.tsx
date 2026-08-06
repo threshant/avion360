@@ -206,7 +206,7 @@ export default function SettingsPage() {
   // Profile
   const [firstName, setFirstName] = useState("Arjun");
   const [lastName, setLastName] = useState("Sharma");
-  const [email, setEmail] = useState("arjun.sharma@sourcersbiz.com");
+  const [email, setEmail] = useState("arjun.sharma@avion360.com");
   const [phone, setPhone] = useState("+91 98765 43210");
   const [department, setDepartment] = useState("Sales");
   const [saved, setSaved] = useState(false);

@@ -364,7 +364,7 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
               <Text style={styles.logoS}>S</Text>
             </View>
             <View style={styles.companyBlock}>
-              <Text style={styles.companyName}>SOURCESBIZ</Text>
+              <Text style={styles.companyName}>AVION360</Text>
               <Text style={styles.companyTagline}>Connecting Materials, Creating Value.</Text>
             </View>
           </View>
@@ -372,8 +372,8 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
             <Text>No. 123, 1st Floor, XYZ Complex,</Text>
             <Text>Coimbatore - 641 018, Tamil Nadu, India</Text>
             <Text>+91 12345 67890</Text>
-            <Text>hello@sourcesbiz.com</Text>
-            <Text>www.sourcesbiz.com</Text>
+            <Text>hello@avion360.com</Text>
+            <Text>www.avion360.com</Text>
             <Text style={{ fontWeight: "bold" }}>GSTIN: 33ABCDE1234F1Z5</Text>
           </View>
         </View>
@@ -473,7 +473,7 @@ export function PayslipDocument({ data }: { data: PayslipDocData }) {
             <Text style={{ marginTop: 4 }}>Place: Coimbatore</Text>
           </View>
           <View style={styles.sigBlock}>
-            <Text style={styles.sigFor}>For SourcersBiz</Text>
+            <Text style={styles.sigFor}>For Avion360</Text>
             <View style={styles.sigBlank} />
             <Text style={styles.sigLabel}>Authorized Signatory</Text>
           </View>

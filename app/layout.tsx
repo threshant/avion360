@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sourcersbiz CRM",
-  description: "Production-ready Next.js CRM starter",
+  title: "Avion360",
+  description: "Production-ready Avion360 CRM starter",
 };
 
 // Check database connection on server startup (only in development)
@@ -102,7 +102,7 @@ export default function RootLayout({
                         color: "#0f172a",
                       }}
                     >
-                      Sourcersbiz CRM
+                      Avion360
                     </h2>
                     <p
                       style={{

@@ -479,7 +479,7 @@ export default function CrmShell({
           aria-label="Mobile navigation"
         >
           <div className="mb-4 flex items-center justify-between gap-3 px-2 py-2">
-            <p className="text-sm font-bold text-[#1A1A1A]">Sourcersbiz CRM</p>
+            <p className="text-sm font-bold text-[#1A1A1A]">Avion360</p>
             <button
               type="button"
               onClick={() => setIsMobileSidebarOpen(false)}
@@ -610,7 +610,7 @@ export default function CrmShell({
             </button>
             {!isSidebarCollapsed && (
               <p className="text-sm font-bold text-[#1A1A1A]">
-                Sourcersbiz CRM
+                Avion360
               </p>
             )}
           </div>

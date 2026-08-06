@@ -1,11 +1,11 @@
-export const BUSINESS_NAME = "SOURCERSBIZ";
+export const BUSINESS_NAME = "AVION360";
 export const ADDRESS =
   "1st Floor, No.17, Sri Venkateshwara Tower, FCI Rd, opposite Fire Station & Rescue station, Gandhimaa Nagar, Peelamedu, Coimbatore, Tamil Nadu - 641004";
 export const GST_NO = "33AFPFS2192K1ZI";
 export const CONTACT = "86681 91780";
 
 export const BANK = {
-  name: "SOURCERSBIZ",
+  name: "AVION360",
   bank: "HDFC Bank",
   acc: "50200112480147",
   ifsc: "HDFC0001068",

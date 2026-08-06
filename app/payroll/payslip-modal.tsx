@@ -186,7 +186,7 @@ export function PayslipModal({
                   </div>
                   <div>
                     <div className="text-lg font-bold tracking-widest text-[#1a3a5c]">
-                      SOURCESBIZ
+                      AVION360
                     </div>
                     <div className="text-[9px] text-gray-500">
                       Connecting Materials, Creating Value.
@@ -197,8 +197,8 @@ export function PayslipModal({
                   <div>No. 123, 1st Floor, XYZ Complex,</div>
                   <div>Coimbatore - 641 018, Tamil Nadu, India</div>
                   <div>+91 12345 67890</div>
-                  <div>hello@sourcesbiz.com</div>
-                  <div>www.sourcesbiz.com</div>
+                  <div>hello@avion360.com</div>
+                  <div>www.avion360.com</div>
                   <div className="font-semibold">GSTIN: 33ABCDE1234F1Z5</div>
                 </div>
               </div>
@@ -359,7 +359,7 @@ export function PayslipModal({
                   <div className="mt-1">Place: Coimbatore</div>
                 </div>
                 <div className="text-right">
-                  <div className="font-semibold">For SourcersBiz</div>
+                  <div className="font-semibold">For Avion360</div>
                   <div className="my-3 h-8 w-36 border-b border-black ml-auto"></div>
                   <div>Authorized Signatory</div>
                 </div>

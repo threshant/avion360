@@ -243,7 +243,7 @@ export default function Sidebar() {
         </button>
         {!isSidebarCollapsed && (
           <div>
-            <p className="text-lg font-bold">Sourcersbiz CRM</p>
+            <p className="text-lg font-bold">Avion360</p>
             <p className="text-xs text-sky-200">Control Center</p>
           </div>
         )}

@@ -396,7 +396,7 @@ export function InvoiceDocument({ data }: { data: InvoiceDocData }) {
         {/* Footer */}
         <View fixed style={styles.footer}>
           <Text style={styles.footerText}>
-            Thank you for choosing our services | Email: info@sourcersbiz.com | Tel: 86681 91780
+            Thank you for choosing our services | Email: info@avion360.com | Tel: 86681 91780
           </Text>
         </View>
       </Page>

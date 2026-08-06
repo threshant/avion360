@@ -92,7 +92,7 @@ export default function Home() {
 
             <div>
               <p className="text-xs uppercase tracking-[0.28em] text-white/75">
-                Sourcersbiz CRM
+                Avion360
               </p>
               <h1
                 className={`${headingFont.className} mt-6 text-3xl font-semibold leading-tight sm:text-4xl`}
