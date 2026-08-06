@@ -1,0 +1,20 @@
+-- Migration to separate TDS and TCS fields in invoices and proforma_invoices
+-- Run this in your Supabase SQL editor
+
+ALTER TABLE invoices 
+DROP COLUMN IF EXISTS tds_tcs_rate,
+DROP COLUMN IF EXISTS tds_tcs_amount,
+DROP COLUMN IF EXISTS tds_tcs_type,
+ADD COLUMN IF NOT EXISTS tds_rate NUMERIC(5, 2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS tds_amount NUMERIC(14, 2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS tcs_rate NUMERIC(5, 2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS tcs_amount NUMERIC(14, 2) DEFAULT 0;
+
+ALTER TABLE proforma_invoices 
+DROP COLUMN IF EXISTS tds_tcs_rate,
+DROP COLUMN IF EXISTS tds_tcs_amount,
+DROP COLUMN IF EXISTS tds_tcs_type,
+ADD COLUMN IF NOT EXISTS tds_rate NUMERIC(5, 2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS tds_amount NUMERIC(14, 2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS tcs_rate NUMERIC(5, 2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS tcs_amount NUMERIC(14, 2) DEFAULT 0;

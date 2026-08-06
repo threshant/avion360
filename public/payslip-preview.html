@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payslip Preview — Abirami — May 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f0f4f8; display: flex; flex-direction: column; align-items: center; padding: 24px; }
+    .controls { margin-bottom: 20px; display: flex; gap: 12px; }
+    button {
+      padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 600;
+    }
+    .btn-print { background: #0ea5e9; color: white; }
+    .btn-print:hover { background: #0284c7; }
+
+    /* ── Payslip styles ── */
+    .slip {
+      width: 720px;
+      background: white;
+      border: 1px solid #ccc;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #000;
+    }
+    .slip-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 16px 20px; border-bottom: 2px solid #1a3a5c;
+    }
+    .logo-area { display: flex; align-items: center; gap: 12px; }
+    .logo-box {
+      width: 48px; height: 48px; background: #1a3a5c; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-s { color: white; font-size: 24px; font-weight: 900; font-style: italic; }
+    .company-name { font-size: 18px; font-weight: 700; color: #1a3a5c; letter-spacing: 1px; }
+    .company-tagline { font-size: 9px; color: #666; margin-top: 2px; }
+    .company-info { font-size: 9px; color: #333; text-align: right; line-height: 1.6; }
+
+    .slip-title {
+      background: #1a3a5c; color: white; text-align: center;
+      padding: 8px; font-size: 15px; font-weight: 700; letter-spacing: 3px;
+    }
+    .slip-month {
+      text-align: center; padding: 6px; font-size: 11px;
+      border-bottom: 1px solid #ccc;
+    }
+    .slip-month span { border-bottom: 1px solid #000; padding: 0 40px; font-weight: 600; }
+
+    .emp-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ccc; }
+    .emp-row {
+      display: flex; padding: 5px 16px;
+      border-bottom: 1px solid #eee; font-size: 10px;
+    }
+    .emp-label { width: 170px; color: #444; flex-shrink: 0; }
+    .emp-sep { margin-right: 8px; color: #888; }
+    .emp-value { border-bottom: 1px solid #888; flex: 1; }
+
+    .sal-section { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ccc; }
+    .sal-col { border-right: 1px solid #ccc; }
+    .sal-col:last-child { border-right: none; }
+    .sal-header {
+      background: #1a3a5c; color: white; text-align: center;
+      padding: 6px; font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    }
+    .sal-sub-head {
+      display: flex; background: #f0f0f0; font-size: 9px; font-weight: 700;
+      border-bottom: 1px solid #ccc;
+    }
+    .sal-sub-head .part { flex: 1; padding: 4px 10px; }
+    .sal-sub-head .amt { width: 110px; text-align: right; padding: 4px 10px; border-left: 1px solid #ccc; }
+
+    .sal-row { display: flex; border-bottom: 1px solid #f0f0f0; font-size: 10px; min-height: 22px; }
+    .sal-row .part { flex: 1; padding: 4px 10px; }
+    .sal-row .amt { width: 110px; text-align: right; padding: 4px 10px; border-left: 1px solid #eee; }
+    .sal-row.filler .part { color: #bbb; }
+    .sal-row.filler .amt { color: #bbb; }
+
+    .sal-total {
+      display: flex; font-weight: 700; font-size: 10px;
+      background: #f5f5f5; border-top: 1px solid #ccc;
+    }
+    .sal-total .part { flex: 1; padding: 6px 10px; }
+    .sal-total .amt { width: 110px; text-align: right; padding: 6px 10px; border-left: 1px solid #ccc; }
+
+    .net-row {
+      display: flex; align-items: center; padding: 8px 16px;
+      border-bottom: 1px solid #ccc; font-size: 11px;
+    }
+    .net-label { font-weight: 700; min-width: 180px; }
+    .net-value { font-weight: 700; font-size: 14px; margin-left: 8px; color: #1a3a5c; }
+
+    .words-row { padding: 6px 16px 8px; font-size: 10px; border-bottom: 1px solid #ccc; }
+    .slip-footer {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 12px 16px; font-size: 10px;
+    }
+    .sig-block { text-align: right; }
+    .sig-blank { height: 32px; border-bottom: 1px solid #000; width: 150px; margin: 6px 0 4px auto; }
+    .disclaimer {
+      border-top: 1px solid #eee; text-align: center;
+      font-size: 8px; color: #888; padding: 5px;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .controls { display: none; }
+      .slip { border: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="controls">
+  <button class="btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+<div class="slip">
+
+  <!-- Header -->
+  <div class="slip-header">
+    <div class="logo-area">
+      <div class="logo-box"><span class="logo-s">S</span></div>
+      <div>
+        <div class="company-name">SOURCESBIZ</div>
+        <div class="company-tagline">Connecting Materials, Creating Value.</div>
+      </div>
+    </div>
+    <div class="company-info">
+      No. 123, 1st Floor, XYZ Complex,<br>
+      Coimbatore - 641 018, Tamil Nadu, India<br>
+      +91 12345 67890<br>
+      hello@sourcesbiz.com<br>
+      www.sourcesbiz.com<br>
+      <strong>GSTIN: 33ABCDE1234F1Z5</strong>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div class="slip-title">— SALARY SLIP —</div>
+  <div class="slip-month">For the Month of <span>May 2026</span></div>
+
+  <!-- Employee Info -->
+  <div class="emp-grid">
+    <div class="emp-row"><span class="emp-label">Employee Name</span><span class="emp-sep">:</span><span class="emp-value">Abirami</span></div>
+    <div class="emp-row"><span class="emp-label">Employee ID</span><span class="emp-sep">:</span><span class="emp-value">EMP001</span></div>
+    <div class="emp-row"><span class="emp-label">Date of Birth</span><span class="emp-sep">:</span><span class="emp-value">15/04/1998</span></div>
+    <div class="emp-row"><span class="emp-label">Date of Joining</span><span class="emp-sep">:</span><span class="emp-value">01/06/2024</span></div>
+    <div class="emp-row"><span class="emp-label">Designation</span><span class="emp-sep">:</span><span class="emp-value">Sales Executive</span></div>
+    <div class="emp-row"><span class="emp-label">Department</span><span class="emp-sep">:</span><span class="emp-value">Sales</span></div>
+    <div class="emp-row"><span class="emp-label">Number of Working Days</span><span class="emp-sep">:</span><span class="emp-value">18</span></div>
+    <div class="emp-row"><span class="emp-label">LOP (Days)</span><span class="emp-sep">:</span><span class="emp-value">2</span></div>
+  </div>
+
+  <!-- Earnings / Deductions -->
+  <div class="sal-section">
+
+    <!-- Earnings -->
+    <div class="sal-col">
+      <div class="sal-header">EARNINGS</div>
+      <div class="sal-sub-head">
+        <div class="part">Particulars</div>
+        <div class="amt">Amount (₹)</div>
+      </div>
+      <div class="sal-row"><div class="part">Basic Salary</div><div class="amt">18,000.00</div></div>
+      <div class="sal-row"><div class="part">HRA</div><div class="amt">12,000.00</div></div>
+      <div class="sal-row"><div class="part">Other Allowance</div><div class="amt">—</div></div>
+      <div class="sal-row filler"><div class="part">__________ Allowance</div><div class="amt">XXX</div></div>
+      <div class="sal-row filler"><div class="part">__________ Allowance</div><div class="amt">XXX</div></div>
+      <div class="sal-total"><div class="part">Total Earnings (A)</div><div class="amt">30,000.00</div></div>
+    </div>
+
+    <!-- Deductions -->
+    <div class="sal-col">
+      <div class="sal-header">DEDUCTIONS</div>
+      <div class="sal-sub-head">
+        <div class="part">Particulars</div>
+        <div class="amt">Amount (₹)</div>
+      </div>
+      <div class="sal-row"><div class="part">Professional Tax</div><div class="amt">208.00</div></div>
+      <div class="sal-row"><div class="part">LOP Deduction (2 days)</div><div class="amt">2,307.69</div></div>
+      <div class="sal-row"><div class="part">Other Deductions</div><div class="amt">—</div></div>
+      <div class="sal-row filler"><div class="part"></div><div class="amt">XXX</div></div>
+      <div class="sal-row filler"><div class="part"></div><div class="amt">XXX</div></div>
+      <div class="sal-total"><div class="part">Total Deductions (B)</div><div class="amt">2,515.69</div></div>
+    </div>
+  </div>
+
+  <!-- Net Salary -->
+  <div class="net-row">
+    <span class="net-label">NET SALARY (A – B)</span>
+    <span class="net-value">₹ 27,484.31</span>
+  </div>
+  <div class="words-row">
+    <strong>Net Salary in Words:</strong>&nbsp; Rupees Twenty Seven Thousand Four Hundred Eighty Four and 31 Paise Only
+  </div>
+
+  <!-- Footer -->
+  <div class="slip-footer">
+    <div>
+      <div>Date: ___________</div>
+      <div style="margin-top:6px">Place: Coimbatore</div>
+    </div>
+    <div class="sig-block">
+      <div style="font-weight:600;font-size:11px">For SourcersBiz</div>
+      <div class="sig-blank"></div>
+      <div>Authorized Signatory</div>
+    </div>
+  </div>
+  <div class="disclaimer">
+    This is a computer generated payslip and does not require a physical signature.
+  </div>
+
+</div><!-- .slip -->
+
+</body>
+</html>

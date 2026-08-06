@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+
+  /* Brand / Design System */
+  --brand: #FF6B4A;
+  --brand-light: #FFF1EE;
+  --brand-muted: #FDDDD6;
+  --page-bg: #F6F6F4;
+  --border-color: #E5E7EB;
+  --text-primary: #1A1A1A;
+  --text-muted: #6B7280;
+  --positive: #22C55E;
+
+  /* ShadCN CSS variable mappings */
+  --primary: #FF6B4A;
+  --primary-foreground: #ffffff;
+  --accent: #f4f4f5;
+  --accent-foreground: #1a1a1a;
+  --muted: #f4f4f5;
+  --muted-foreground: #6B7280;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), var(--font-geist-sans), "Inter", "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--foreground);
+  font-family: var(--font-inter), var(--font-geist-sans), "Inter", "Segoe UI", sans-serif;
+}
+
+
+@keyframes shimmer {
+  0% {
+    opacity: 0.2;
+    transform: translateX(-6%);
+  }
+  50% {
+    opacity: 0.38;
+    transform: translateX(6%);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(-6%);
+  }
+}
+
+.crm-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e2e8f0, #f1f5f9);
+}
+
+.crm-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.72),
+    rgba(255, 255, 255, 0)
+  );
+  animation: crm-skeleton-shimmer 1.3s ease-in-out infinite;
+}
+
+@keyframes crm-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crm-skeleton::after {
+    animation: none;
+  }
+}
+
+.crm-sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200, 200, 200, 0.7) transparent;
+}
+
+.crm-sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.crm-sidebar-scroll::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.crm-sidebar-scroll::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(200, 200, 200, 0.7);
+}
+
+.crm-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(160, 160, 160, 0.9);
+}
+
+.crm-minimal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200, 200, 200, 0.5) transparent;
+}
+
+.crm-minimal-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.crm-minimal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.crm-minimal-scroll::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: rgba(200, 200, 200, 0.5);
+}
+
+.crm-minimal-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(160, 160, 160, 0.7);
+}

@@ -1,0 +1,19 @@
+
+> crm-app@0.1.0 dev
+> next dev
+
+ΓÜá Port 3000 is in use by process 18820, using available port 3001 instead.
+Γû▓ Next.js 16.2.1 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://10.207.30.180:3001
+- Environments: .env.local
+Γ£ô Ready in 1044ms
+Γ¿» Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          18820
+- Dir:          F:\Internship\Aviontive LLP\sourcersbiz-crm
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 18820 /F to stop it.
+[?25h

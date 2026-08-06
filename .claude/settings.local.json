@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /f/Internship/Aviontive LLP/sourcersbiz-crm/crm-app)",
+      "Bash(npm install:*)",
+      "Bash(xargs grep:*)",
+      "Bash(node -e \"const p = require\\('f:/Internship/Aviontive LLP/sourcersbiz-crm/node_modules/next/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000/api/finance/summary)",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s \"http://localhost:3000/api/finance/transactions?pageSize=5\")",
+      "Bash(curl -s http://localhost:3000/api/reports/list)",
+      "Bash(curl -s http://localhost:3000/api/reports/analytics)",
+      "Bash(curl -s http://localhost:3000/api/analytics/dashboard/overview)",
+      "Bash(curl -s \"http://localhost:3000/api/finance/transactions?type=Income\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/finance/transactions -H \"Content-Type: application/json\" -d '{\"type\":\"Income\",\"party\":\"Test Client Ltd\",\"amount\":100000,\"date\":\"2026-04-17\",\"status\":\"Pending\",\"details\":\"Test entry\"}')",
+      "Bash(curl -s \"http://localhost:3000/api/settings/aviontive\")",
+      "Bash(curl -s http://localhost:3000/api/settings/credit-flow)",
+      "Bash(curl -s -X PUT http://localhost:3000/api/settings/credit-flow -H \"Content-Type: application/json\" -d '{\"enabled\":false}')",
+      "Bash(curl -s \"http://localhost:3000/api/finance/transactions?pageSize=3\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/finance/transactions -H \"Content-Type: application/json\" -d '{\"type\":\"Income\",\"party\":\"Cash\",\"amount\":1000,\"date\":\"2026-04-17\",\"is_credit\":true}')",
+      "Bash(curl -s -X PUT http://localhost:3000/api/settings/credit-flow -H \"Content-Type: application/json\" -d '{\"enabled\":true}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/finance/transactions -H \"Content-Type: application/json\" -d '{\"type\":\"Income\",\"party\":\"Cash Deposit\",\"amount\":75000,\"date\":\"2026-04-17\",\"status\":\"Completed\",\"details\":\"Manual cash entry\",\"is_credit\":true}')",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

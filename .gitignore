@@ -1,0 +1,13 @@
+AGENTS.md
+/crm-app/CLAUDE.md
+node_modules/
+.next/
+.env
+.env.local
+.env.*.local
+dist/
+build/
+/CLAUDE.md
+API_TESTING_GUIDE.md
+/API_TESTING_GUIDE.md
+.env.example
