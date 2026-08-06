@@ -609,9 +609,7 @@ export default function CrmShell({
               <Menu className="h-4 w-4" aria-hidden="true" />
             </button>
             {!isSidebarCollapsed && (
-              <p className="text-sm font-bold text-[#1A1A1A]">
-                Avion360
-              </p>
+              <p className="text-sm font-bold text-[#1A1A1A]">Avion360</p>
             )}
           </div>
 

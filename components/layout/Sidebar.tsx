@@ -63,7 +63,12 @@ const allNavItems: NavItem[] = [
     icon: "home",
     permissionKey: undefined,
   },
-  { label: "Leads", href: "/conversations", icon: "users", permissionKey: "leads" },
+  {
+    label: "Leads",
+    href: "/conversations",
+    icon: "users",
+    permissionKey: "leads",
+  },
   { label: "Calls", href: "/calls", icon: "phone", permissionKey: undefined },
   {
     label: "People",

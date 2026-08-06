@@ -29,19 +29,51 @@ export const CURRENCY_NAMES: Record<string, string> = {
 
 export function amountInWords(amount: number, currency = "INR"): string {
   const ones = [
-    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
-    "Seventeen", "Eighteen", "Nineteen",
+    "",
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
   ];
   const tens = [
-    "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety",
+    "",
+    "",
+    "Twenty",
+    "Thirty",
+    "Forty",
+    "Fifty",
+    "Sixty",
+    "Seventy",
+    "Eighty",
+    "Ninety",
   ];
 
   function below100(n: number): string {
-    return n < 20 ? ones[n] : tens[Math.floor(n / 10)] + (n % 10 ? " " + ones[n % 10] : "");
+    return n < 20
+      ? ones[n]
+      : tens[Math.floor(n / 10)] + (n % 10 ? " " + ones[n % 10] : "");
   }
   function below1000(n: number): string {
-    return n < 100 ? below100(n) : ones[Math.floor(n / 100)] + " Hundred" + (n % 100 ? " " + below100(n % 100) : "");
+    return n < 100
+      ? below100(n)
+      : ones[Math.floor(n / 100)] +
+          " Hundred" +
+          (n % 100 ? " " + below100(n % 100) : "");
   }
 
   const intAmt = Math.floor(amount);

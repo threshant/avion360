@@ -646,7 +646,7 @@ export default function SettingsPage() {
                       <button
                         type="button"
                         onClick={handleSavePreferences}
-                          className="rounded-xl bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#e55a39] active:scale-95"
+                        className="rounded-xl bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#e55a39] active:scale-95"
                       >
                         Save Preferences
                       </button>
@@ -869,7 +869,7 @@ export default function SettingsPage() {
                         <button
                           type="button"
                           onClick={handleSavePreferences}
-                        className="rounded-xl bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#e55a39] active:scale-95"
+                          className="rounded-xl bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#e55a39] active:scale-95"
                         >
                           Save Display Settings
                         </button>

@@ -12,7 +12,11 @@ export default function HomePage() {
   return (
     <CrmShell activeNav="Dashboard">
       <div className="space-y-6 p-4 md:p-6">
-        <PageHeader title="Welcome to Avion360" subtitle="Here's a quick overview of your recent leads from Aviontive" onRefresh={refetch} />
+        <PageHeader
+          title="Welcome to Avion360"
+          subtitle="Here's a quick overview of your recent leads from Aviontive"
+          onRefresh={refetch}
+        />
 
         {/* Leads Count Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
