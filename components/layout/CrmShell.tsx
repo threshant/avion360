@@ -317,6 +317,7 @@ export default function CrmShell({
   const router = useRouter();
   const { logout, user, memberships, activeTenantId, switchTenant } = useAuth();
   const { permissions, loading: permissionsLoading } = useUserPermissions();
+  const isSuperAdmin = user?.role === "super_admin";
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -363,6 +364,7 @@ export default function CrmShell({
 
   // Check if user has permission for a specific nav item
   const hasPermissionForItem = (item: NavItem): boolean => {
+    if (isSuperAdmin) return true;
     if (!item.permissionKey) return true; // No permission required
 
     // For nav items, require the specific .view permission (e.g., inventory.view, not just inventory.create)
@@ -591,7 +593,7 @@ export default function CrmShell({
         {/* ── Sidebar ── */}
         <aside
           className={`hidden shrink-0 rounded-3xl bg-white shadow-sm transition-[width] duration-300 lg:sticky lg:top-3 lg:mb-3 lg:ml-3 lg:flex lg:h-[calc(100vh-1.5rem)] lg:flex-col ${
-            isSidebarCollapsed ? "w-16" : "w-[240px]"
+            isSidebarCollapsed ? "w-16" : "w-60"
           } py-3`}
         >
           {/* Logo / header */}

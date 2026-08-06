@@ -19,7 +19,7 @@ CREATE INDEX IF NOT EXISTS idx_organizations_name ON organizations(name);
 
 CREATE TABLE IF NOT EXISTS memberships (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   tenant_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
   role membership_role_enum NOT NULL DEFAULT 'staff',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
